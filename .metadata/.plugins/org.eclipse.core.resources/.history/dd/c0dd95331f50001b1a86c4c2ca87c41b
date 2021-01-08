@@ -1,0 +1,72 @@
+package com.crm.qa.testcases;
+
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.crm.qa.base.TestBase;
+import com.crm.qa.pages.ChainsCatalogue;
+import com.crm.qa.pages.ChainsCataloguePage;
+import com.crm.qa.pages.ContactsPage;
+import com.crm.qa.pages.HomePage;
+import com.crm.qa.pages.LoginPage;
+import com.crm.qa.util.TestUtil;
+
+public class HomePageTest extends TestBase {
+	LoginPage loginPage;
+	HomePage homePage;
+	TestUtil testUtil;
+	ChainsCataloguePage chainsCatalogue;
+
+	public HomePageTest() {
+		super();
+	}
+
+	// test cases should be separated -- independent with each other
+	// before each test case -- launch the browser and login
+	// @test -- execute test case
+	// after each test case -- close the browser
+
+	@BeforeMethod
+	public void setUp() {
+		initialization();
+		testUtil = new TestUtil();
+		// contactsPage = new ContactsPage();
+		// loginPage = new LoginPage();
+		chainsCatalogue=new ChainsCataloguePage();
+		homePage = new HomePage();
+	}
+
+	@Test
+	public void verifyCompanyTitle() {
+		String homePageTitle = homePage.verifyCompanyTitle();
+		System.out.println("The Company Name is : " + homePageTitle);
+		Assert.assertEquals(homePageTitle, "X Fashions", "Home page title not matched");
+	}
+
+	@Test
+	public void verifyCompanyTitlevisibility() {
+		Assert.assertTrue(homePage.verifyCompantName());
+	}
+
+	@Test
+	public void getCatalogCount() {
+		homePage.verifyCount();
+	}
+
+	@Test
+	public void getDetails() throws InterruptedException {
+		homePage.getCatalogueDetails();
+	}
+	
+	@Test
+	public void ChainsClick() throws InterruptedException {
+		chainsCatalogue=homePage.clickOnChainsLink();
+	}
+	@AfterMethod
+	public void tearDown() {
+		driver.quit();
+	}
+
+}

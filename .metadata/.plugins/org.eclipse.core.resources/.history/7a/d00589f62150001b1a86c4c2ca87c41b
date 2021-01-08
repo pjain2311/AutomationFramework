@@ -1,0 +1,36 @@
+package com.crm.qa.pages;
+
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import com.crm.qa.base.TestBase;
+
+public class ChainsCataloguePage extends TestBase{
+	
+	@FindBy(xpath = "//div[contains(text(),'On sale')]")
+	WebElement OnsaleLink;
+	
+	@FindBy(xpath="//div[@class='discount-badge ']/span[\" + i + \"]")
+	public List<WebElement> CatalogueDetails;
+
+	
+	// Initializing the Page Objects:
+		public ChainsCataloguePage() {
+			PageFactory.initElements(driver, this);
+		}
+
+		public void verifyclickOnFilter() {
+			
+			OnsaleLink.click();
+			if (CatalogueTitle.size() > 0) {
+				for (int i = 0; i < CatalogueTitle.size(); i++) {
+					String Title=CatalogueTitle.get(i).getText();
+					Thread.sleep(1000);
+					System.out.println("The title of catalogue is : "+Title);
+				}
+			}
+		}
+}

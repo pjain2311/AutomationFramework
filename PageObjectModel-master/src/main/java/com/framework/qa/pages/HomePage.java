@@ -1,0 +1,65 @@
+package com.framework.qa.pages;
+
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
+
+import com.framework.qa.base.TestBase;
+
+public class HomePage extends TestBase {
+
+	@FindBy(xpath = "//div[@class='header-expanded-content']/p")
+	WebElement CompamyTitlelink;
+
+	@FindBy(xpath = "//a[@class='catalogue catalogue-grid'][\" + i + \"]")
+	public List<WebElement> CatalogueDetails;
+	
+	@FindBy(xpath="//div[@class='header-expanded-content']/div")
+	public WebElement Catalogcount;
+
+	@FindBy(xpath = "//div[@class='catalogue-title-grid'][\" + i + \"]")
+	public List<WebElement> CatalogueTitle;
+	
+	@FindBy(xpath="//div[contains(text(),'Chains')]/parent::div/parent::div/a")
+	public WebElement ChainsCatalogue;
+
+	// Initializing the Page Objects:
+	public HomePage() {
+		PageFactory.initElements(driver, this);
+	}
+
+	public void verifyCount() {
+		int CatalogSize= CatalogueDetails.size();
+		String Cat_Value=Integer.toString(CatalogSize);
+		String SizeCount=Catalogcount.getText();
+		String Count[]=SizeCount.split(" ");
+		Assert.assertEquals(Cat_Value, Count[0]);
+	}
+
+	public String verifyCompanyTitle() {
+		return CompamyTitlelink.getText();
+	}
+
+	public boolean verifyCompantName() {
+		return CompamyTitlelink.isDisplayed();
+	}
+
+	public void getCatalogueDetails() throws InterruptedException {
+		if (CatalogueTitle.size() > 0) {
+			for (int i = 0; i < CatalogueTitle.size(); i++) {
+				String Title=CatalogueTitle.get(i).getText();
+				Thread.sleep(1000);
+				System.out.println("The title of catalogue is : "+Title);
+			}
+		}
+	}
+	public ChainsCataloguePage clickOnChainsLink(){
+		ChainsCatalogue.click();
+		return new ChainsCataloguePage();
+	}
+}
