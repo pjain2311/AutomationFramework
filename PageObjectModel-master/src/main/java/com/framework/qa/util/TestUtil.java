@@ -21,16 +21,12 @@ public class TestUtil extends TestBase {
 	public static long PAGE_LOAD_TIMEOUT = 20;
 	public static long IMPLICIT_WAIT = 20;
 
-	public static String TESTDATA_SHEET_PATH = "/Users/pbabel/eclipse-workspace/Assignment"
-			+ "/PageObjectModel-master/src/main/java/com/framework/qa/testdata/TestData.xlsx";
+	public static String TESTDATA_SHEET_PATH = System.getProperty("user.dir")
+			+ "/src/main/java/com/framework/qa/testdata/TestData.xlsx";
 
 	static Workbook book;
 	static Sheet sheet;
 	static JavascriptExecutor js;
-
-	public void switchToFrame() {
-		driver.switchTo().frame("mainpanel");
-	}
 
 	public static Object[][] getTestData(String sheetName) {
 		FileInputStream file = null;
@@ -86,12 +82,12 @@ public class TestUtil extends TestBase {
 		js.executeScript("$.growl({ title: 'GET', message: '/' });");
 //'"+color+"'"
 		if (messageType.equals("error")) {
-			js.executeScript("$.growl.error({ title: 'ERROR', message: '"+message+"' });");
-		}else if(messageType.equals("info")){
+			js.executeScript("$.growl.error({ title: 'ERROR', message: '" + message + "' });");
+		} else if (messageType.equals("info")) {
 			js.executeScript("$.growl.notice({ title: 'Notice', message: 'your notice message goes here' });");
-		}else if(messageType.equals("warning")){
+		} else if (messageType.equals("warning")) {
 			js.executeScript("$.growl.warning({ title: 'Warning!', message: 'your warning message goes here' });");
-		}else
+		} else
 			System.out.println("no error message");
 		// jquery-growl w/ colorized output
 //		js.executeScript("$.growl.error({ title: 'ERROR', message: 'your error message goes here' });");
